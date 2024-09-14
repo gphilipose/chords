@@ -22,7 +22,7 @@
     border: 1px solid #142634;
     margin-bottom: 10px;
     margin-top: -10px;
-    h2 {
+    h2, select {
         color: white;
         padding: 10px;
         margin-top: 0px;
