@@ -12,7 +12,7 @@
 .chords {
     border: 1px solid #142634;
     padding: 10px;
-    h1, h3 {
+    h1, h3, p {
         color: white;
         margin-top: 0px;
         margin-bottom: 0px;
