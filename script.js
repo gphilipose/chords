@@ -4,10 +4,12 @@ var last = 0; //have it whenever a song is clicked on, it brings up localstorage
 let str = ["A", "A#", "Bb", "B", "C", "C#", "Db", "D", "D#", "Eb", "E", "F", "F#", "Gb", "G", "G#", "Ab"]
 
 
+//const chordsButton = getElementById("")
 
 
 
 window.addEventListener("load", function() {
+    localStorage.setItem("page", "HereIAm");
     let restore = localStorage.getItem("HereIAm")
     let restoreJson = JSON.parse(restore);
     let getContent = localStorage.getItem("content");
@@ -15,16 +17,16 @@ window.addEventListener("load", function() {
 
     if (restore){
 
-        if(restoreJson.name=="HereIAm"){
-            last = restoreJson.lastKey;
-            menu.value = last;
+        // if(restoreJson.name=="HereIAm"){
+        //     last = restoreJson.lastKey;
+        //     menu.value = last;
 
             
-            const chordLetters = document.getElementsByClassName("transpose")
-            for(let i=0; i<chordLetters.length; i++) {
-                chordLetters[i].innerHTML = content[i];
-            }
-        }
+        //     const chordLetters = document.getElementsByClassName("transpose")
+        //     for(let i=0; i<chordLetters.length; i++) {
+        //         chordLetters[i].innerHTML = content[i];
+        //     }
+        // }
     }
 });
 
