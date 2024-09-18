@@ -6,23 +6,27 @@ let str = ["A", "A#", "Bb", "B", "C", "C#", "Db", "D", "D#", "Eb", "E", "F", "F#
 
 
 
+
 window.addEventListener("load", function() {
     let restore = localStorage.getItem("HereIAm")
     let restoreJson = JSON.parse(restore);
-    if(restoreJson.name=="HereIAm"){
-        last = restoreJson.lastKey;
-        menu.value = last;
-        const chordLetters = document.getElementsByClassName("transpose")
-        let num = Number(menu.value);
-        transp(chordLetters, num);
-        //this.confirm("this")
+    let getContent = localStorage.getItem("content");
+    let content = JSON.parse(getContent);
 
-        //menuEvent();
-        //this.confirm(menu.value)
+    if (restore){
 
+        if(restoreJson.name=="HereIAm"){
+            last = restoreJson.lastKey;
+            menu.value = last;
+
+            
+            const chordLetters = document.getElementsByClassName("transpose")
+            for(let i=0; i<chordLetters.length; i++) {
+                chordLetters[i].innerHTML = content[i];
+            }
+        }
     }
 });
-
 
 menu.addEventListener("input", function(){ menuEvent(); });
 
@@ -30,6 +34,14 @@ function menuEvent(){
     const chordLetters = document.getElementsByClassName("transpose")
     let num = Number(menu.value);
     transp(chordLetters, num);
+    let temp = [];
+    for (let i=0; i<chordLetters.length;i++){
+        temp.push(chordLetters[i].innerHTML);
+    }
+    const content = JSON.stringify(temp);
+    localStorage.setItem("content", content);
+
+
     let settings = {
         name: "HereIAm",
         lastKey: last
@@ -37,8 +49,6 @@ function menuEvent(){
     const setString = JSON.stringify(settings);
     localStorage.setItem("HereIAm", setString);
 }
-
-
 
 function transp(chords, num) {
     for(let i=0; i< chords.length; i++) {
@@ -87,3 +97,7 @@ function transp(chords, num) {
     }
     last = num;
 }
+
+
+
+

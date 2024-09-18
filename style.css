@@ -6,8 +6,23 @@
 .header {
     background-color: #142634;
     color: #c9d5e1;
+    display: flex;
+    margin-bottom: 0px;
+
+
     
 }
+
+.buttons {
+    background-color: #142634;
+    margin-bottom: 0px;
+    button, h3{
+        background-color: #142634;
+        color: #c9d5e1;
+        border: 0px;
+    }
+}
+
 
 .chords {
     border: 1px solid #142634;
