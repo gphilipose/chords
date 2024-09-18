@@ -17,16 +17,16 @@ window.addEventListener("load", function() {
 
     if (restore){
 
-        // if(restoreJson.name=="HereIAm"){
-        //     last = restoreJson.lastKey;
-        //     menu.value = last;
+        if(restoreJson.name=="HereIAm"){
+            last = restoreJson.lastKey;
+            menu.value = last;
 
             
-        //     const chordLetters = document.getElementsByClassName("transpose")
-        //     for(let i=0; i<chordLetters.length; i++) {
-        //         chordLetters[i].innerHTML = content[i];
-        //     }
-        // }
+            const chordLetters = document.getElementsByClassName("transpose")
+            for(let i=0; i<chordLetters.length; i++) {
+                chordLetters[i].innerHTML = content[i];
+            }
+        }
     }
 });
 
