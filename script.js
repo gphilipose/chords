@@ -1,6 +1,11 @@
 const menu = document.getElementById("key")
 var last = 0; //have it whenever a song is clicked on, it brings up localstorage settings including 'last' value
 
+
+// rewrite array to exclude Ab, Bb, Db, Eb, and Gb - add an extra button to concert sharps to flats (for any key) + vice versa
+// when changing key after button has been pushed, use sharp key conversion button and then change normally to chosen key
+// change all sharp select menu options to also display flat - Ex: A# / Gb
+
 let str = ["A", "A#", "Bb", "B", "C", "C#", "Db", "D", "D#", "Eb", "E", "F", "F#", "Gb", "G", "G#", "Ab"]
 
 
