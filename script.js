@@ -1,12 +1,16 @@
 const menu = document.getElementById("key")
 var last = 0; //have it whenever a song is clicked on, it brings up localstorage settings including 'last' value
 
+/// add a save feature + more later on / when I get time
+
+const flat = document.getElementById("flat");
+const sharp = document.getElementById("sharp");
 
 // rewrite array to exclude Ab, Bb, Db, Eb, and Gb - add an extra button to concert sharps to flats (for any key) + vice versa
 // when changing key after button has been pushed, use sharp key conversion button and then change normally to chosen key
 // change all sharp select menu options to also display flat - Ex: A# / Gb
 
-let str = ["A", "A#", "Bb", "B", "C", "C#", "Db", "D", "D#", "Eb", "E", "F", "F#", "Gb", "G", "G#", "Ab"]
+let str = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"]
 
 
 //const chordsButton = getElementById("")
@@ -49,7 +53,7 @@ function menuEvent(){
     localStorage.setItem("HereIAm1", content);
 
 
-    let settings = {
+     let settings = {
         name: "HereIAm",
         lastKey: last
     }
@@ -57,45 +61,93 @@ function menuEvent(){
     localStorage.setItem("HereIAm", setString);
 }
 
+flat.addEventListener("click", function() {
+    const chordLetters = document.getElementsByClassName("transpose")
+    for(let i=0; i< chordLetters.length; i++) {
+        
+        //let regular = chords[i].innerHTML.replace(/A(?![#b])|A#|Bb|B(?![#b])|C(?![#b])|C#|Db|D(?![#b])|D#|Eb|E(?![#b])|F(?![#b])|F#|Gb|G(?![#b])|G#|Ab/g, function(match){
+            let regular = chordLetters[i].innerHTML.replace(/A#|C#|D#|F#|G#/g, function(match){
+            switch (match) { //make all these mod 17 after
+                case "A#": //'A':
+                    return "Bb";
+                case "C#":
+                    return "Db";
+                case "D#":
+                    return "Eb";
+                case "F#":
+                    return "Gb";
+                case "G#":
+                    return "Ab";
+                default:
+                    return match;
+            }
+        });
+        chordLetters[i].innerHTML = regular;
+    }
+})
+
+function sharpFunction() {
+    
+    const chordLetters = document.getElementsByClassName("transpose")
+    for(let i=0; i< chordLetters.length; i++) {
+        
+        //let regular = chords[i].innerHTML.replace(/A(?![#b])|A#|Bb|B(?![#b])|C(?![#b])|C#|Db|D(?![#b])|D#|Eb|E(?![#b])|F(?![#b])|F#|Gb|G(?![#b])|G#|Ab/g, function(match){
+            let regular = chordLetters[i].innerHTML.replace(/Ab|Bb|Db|Eb|Gb/g, function(match){
+            switch (match) { //make all these mod 17 after
+                case "Ab": //'A':
+                    return "G#";
+                case "Bb":
+                    return "A#";
+                case "Db":
+                    return "C#";
+                case "Eb":
+                    return "D#";
+                case "Gb":
+                    return "F#";
+                default:
+                    return match;
+            }
+        });
+        chordLetters[i].innerHTML = regular;
+    }
+}
+sharp.addEventListener("click", function() {
+    sharpFunction();
+})
+
+
+
+
 function transp(chords, num) {
+    sharpFunction();
     for(let i=0; i< chords.length; i++) {
-        //let regular = new RegExp(`[(A(?![#b]))(A#)(Bb)(B(?![#b]))(C(?![#b]))(C#)(Db)(D(?![#b]))(D#)(Eb)(E(?![#b]))(F(?![#b]))(F#)(Gb)(G(?![#b]))(G#)(Ab)]`, 'g');
-        let regular = chords[i].innerHTML.replace(/A(?![#b])|A#|Bb|B(?![#b])|C(?![#b])|C#|Db|D(?![#b])|D#|Eb|E(?![#b])|F(?![#b])|F#|Gb|G(?![#b])|G#|Ab/g, function(match){
+        //let regular = chords[i].innerHTML.replace(/A(?![#b])|A#|Bb|B(?![#b])|C(?![#b])|C#|Db|D(?![#b])|D#|Eb|E(?![#b])|F(?![#b])|F#|Gb|G(?![#b])|G#|Ab/g, function(match){
+            let regular = chords[i].innerHTML.replace(/A(?![#b])|A#|B(?![#b])|C(?![#b])|C#|D(?![#b])|D#|E(?![#b])|F(?![#b])|F#|G(?![#b])|G#/g, function(match){
             switch (match) { //make all these mod 17 after
                 case str[last]: //'A':
                     return str[num];
-                case str[(last+1)%17]:
-                    return str[(num+1)%17];
-                case str[(last+2)%17]:
-                    return str[(num+2)%17];
-                case str[(last+3)%17]:
-                    return str[(num+3)%17];
-                case str[(last+4)%17]:
-                    return str[(num+4)%17];
-                case str[(last+5)%17]:
-                    return str[(num+5)%17];
-                case str[(last+6)%17]:
-                    return str[(num+6)%17];
-                case str[(last+7)%17]:
-                    return str[(num+7)%17];
-                case str[(last+8)%17]:
-                    return str[(num+8)%17];
-                case str[(last+9)%17]:
-                    return str[(num+9)%17];
-                case str[(last+10)%17]:
-                    return str[(num+10)%17];
-                case str[(last+11)%17]:
-                    return str[(num+11)%17];
-                case str[(last+12)%17]:
-                    return str[(num+12)%17];
-                case str[(last+13)%17]:
-                    return str[(num+13)%17];
-                case str[(last+14)%17]:
-                    return str[(num+14)%17];
-                case str[(last+15)%17]:
-                    return str[(num+15)%17];
-                case str[(last+16)%17]:
-                    return str[(num+16)%17];
+                case str[(last+1)%12]:
+                    return str[(num+1)%12];
+                case str[(last+2)%12]:
+                    return str[(num+2)%12];
+                case str[(last+3)%12]:
+                    return str[(num+3)%12];
+                case str[(last+4)%12]:
+                    return str[(num+4)%12];
+                case str[(last+5)%12]:
+                    return str[(num+5)%12];
+                case str[(last+6)%12]:
+                    return str[(num+6)%12];
+                case str[(last+7)%12]:
+                    return str[(num+7)%12];
+                case str[(last+8)%12]:
+                    return str[(num+8)%12];
+                case str[(last+9)%12]:
+                    return str[(num+9)%12];
+                case str[(last+10)%12]:
+                    return str[(num+10)%12];
+                case str[(last+11)%12]:
+                    return str[(num+11)%12];
                 default:
                     return match;
             }
