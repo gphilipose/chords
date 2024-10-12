@@ -72,7 +72,8 @@
     button {
         background-color: #203547;
         border: 1px solid #142634;
-        width: 140px;
+        padding: 0px;
+        width: 120px;
         height: 47px;
         margin-top: 5px;
         margin-right: 10px;
