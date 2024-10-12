@@ -63,7 +63,7 @@
     border: 1px solid #142634;
     margin-bottom: 10px;
     margin-top: -10px;
-    h2, select, p{
+    h3, select, p{
         color: white;
         padding: 10px;
         margin-top: 0px;
@@ -78,7 +78,7 @@
         margin-top: 5px;
         margin-right: 10px;
         
-        h2 {
+        h3 {
             background-color: #203547;
         }
     }
