@@ -18,14 +18,15 @@ let str = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"]
 
 
 window.addEventListener("load", function() {
-    localStorage.setItem("page", "HereIAm");
+    //menu.value = "A";
+    //localStorage.setItem("page", "HereIAm");
 
 
-    let restore = localStorage.getItem("HereIAm")
-    let restoreJson = JSON.parse(restore);
+    //let restore = localStorage.getItem("HereIAm")
+    //let restoreJson = JSON.parse(restore);
 
-    let getContent = localStorage.getItem("HereIAm1");
-    let content = JSON.parse(getContent);
+    //let getContent = localStorage.getItem("HereIAm1");
+    //let content = JSON.parse(getContent);
 
     // if (restore){
     //     if(restoreJson.name=="HereIAm"){
@@ -37,6 +38,14 @@ window.addEventListener("load", function() {
     //         }
     //     }
     // }
+
+
+    // read where URL is at - store in local storage with that html name?
+    // if possible
+
+
+
+
 });
 
 menu.addEventListener("input", function(){ menuEvent(); });
