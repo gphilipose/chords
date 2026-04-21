@@ -1,0 +1,368 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --bg:        #0f1c27;
+  --bg2:       #162534;
+  --bg3:       #1e3347;
+  --accent:    #e8c97a;
+  --accent2:   #a8d8b0;
+  --text:      #dce8f0;
+  --text-muted:#7fa3bc;
+  --border:    #243d52;
+  --chord:     #e8c97a;
+  --radius:    10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header .logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+.header nav {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 6px 16px;
+  border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s;
+  display: inline-block;
+}
+.nav-btn:hover, .nav-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(232, 201, 122, 0.07);
+}
+
+/* Transpose Panel */
+.panel {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 24px;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 57px;
+  z-index: 99;
+}
+
+.panel label {
+  font-size: 13px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.panel select {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.panel select:focus { border-color: var(--accent); }
+
+.panel-btn {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.15s;
+}
+.panel-btn:hover { border-color: var(--accent); color: var(--accent); }
+.panel-btn.active { background: rgba(232,201,122,0.12); border-color: var(--accent); color: var(--accent); }
+
+.capo-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+/* Song Page */
+.song-page { max-width: 720px; margin: 0 auto; padding: 32px 24px 80px; }
+
+.song-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.song-artist {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+
+.section { margin-bottom: 28px; }
+
+.section-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin-bottom: 14px;
+}
+
+/* Chord/Lyric rows */
+.chord-row { margin-bottom: 10px; }
+
+.chord-line {
+  display: flex;
+  gap: 0;
+  min-height: 22px;
+  margin-bottom: 1px;
+  flex-wrap: wrap;
+}
+
+.chord-segment {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--chord);
+  min-width: 48px;
+  letter-spacing: 0.02em;
+}
+
+.lyric-line {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.5;
+  font-weight: 300;
+}
+
+/* Index Page */
+.index-page { max-width: 760px; margin: 0 auto; padding: 28px 24px 80px; }
+
+.search-wrap {
+  position: relative;
+  margin-bottom: 24px;
+}
+.search-wrap svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+.search-input {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 11px 16px 11px 42px;
+  border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.search-input::placeholder { color: var(--text-muted); }
+.search-input:focus { border-color: var(--accent); }
+
+.setlist-section { margin-bottom: 28px; }
+.setlist-header {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.setlist-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.setlist-pill {
+  background: rgba(232,201,122,0.1);
+  border: 1px solid rgba(232,201,122,0.3);
+  color: var(--accent);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+.setlist-pill:hover { background: rgba(232,201,122,0.18); }
+.setlist-pill .remove { font-size: 16px; line-height: 1; opacity: 0.6; }
+
+.alpha-section { margin-bottom: 20px; }
+.alpha-letter {
+  font-family: 'Playfair Display', serif;
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+
+.song-item {
+  display: flex;
+  align-items: center;
+  padding: 9px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.12s;
+  gap: 10px;
+}
+.song-item:hover { background: var(--bg3); }
+
+.song-item-title {
+  font-size: 14px;
+  color: var(--text);
+  flex: 1;
+}
+.song-item-key {
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-weight: 500;
+}
+.song-item-star {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 4px;
+  transition: color 0.12s;
+  line-height: 1;
+}
+.song-item-star:hover { color: var(--accent); }
+.song-item-star.starred { color: var(--accent); }
+
+.no-results {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px 0;
+  font-size: 14px;
+}
+
+/* Back link */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--accent); }
+
+/* Transposer Page */
+.transposer-page { max-width: 720px; margin: 0 auto; padding: 32px 24px 80px; }
+.transposer-page h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.transposer-page p {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.chord-input-area {
+  width: 100%;
+  min-height: 140px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  font-family: 'DM Mono', 'Courier New', monospace;
+  font-size: 14px;
+  resize: vertical;
+  outline: none;
+  line-height: 1.8;
+  transition: border-color 0.15s;
+}
+.chord-input-area:focus { border-color: var(--accent); }
+
+.transposed-output {
+  margin-top: 16px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  font-family: 'DM Mono', 'Courier New', monospace;
+  font-size: 14px;
+  color: var(--chord);
+  line-height: 1.8;
+  white-space: pre-wrap;
+  min-height: 80px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .header { padding: 10px 16px; }
+  .panel { padding: 8px 16px; top: 49px; }
+  .song-page, .index-page, .transposer-page { padding: 20px 16px 60px; }
+  .panel-btn { padding: 5px 10px; font-size: 11px; }
+}

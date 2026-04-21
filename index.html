@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!-- Church Chords - index.html -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Church Chords</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="index.html">Church Chords</a>
+  <nav>
+    <a class="nav-btn active" href="index.html">Songs</a>
+    <a class="nav-btn" href="transposer.html">Transpose</a>
+  </nav>
+</header>
+
+<main class="index-page">
+
+  <!-- Setlist -->
+  <section class="setlist-section" id="setlist-section" style="display:none">
+    <div class="setlist-header">This Sunday</div>
+    <div class="setlist-pills" id="setlist-pills"></div>
+  </section>
+
+  <!-- Search -->
+  <div class="search-wrap">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input class="search-input" id="search" type="text" placeholder="Search songs…" autocomplete="off">
+  </div>
+
+  <!-- Song list -->
+  <div id="song-list"></div>
+  <div class="no-results" id="no-results" style="display:none">No songs found</div>
+
+</main>
+
+<script src="script.js"></script>
+<script src="songs.js"></script>
+<script>
+  // Setlist
+  function getSetlist() {
+    try { return JSON.parse(localStorage.getItem("setlist") || "[]"); } catch(e) { return []; }
+  }
+  function saveSetlist(list) {
+    try { localStorage.setItem("setlist", JSON.stringify(list)); } catch(e) {}
+  }
+  function renderSetlist() {
+    const list = getSetlist();
+    const section = document.getElementById("setlist-section");
+    const pills   = document.getElementById("setlist-pills");
+    if (!list.length) { section.style.display = "none"; return; }
+    section.style.display = "";
+    pills.innerHTML = list.map(id => {
+      const song = SONG_INDEX.find(s => s.id === id);
+      if (!song) return "";
+      return `<a class="setlist-pill" href="song.html?id=${song.id}">
+        ${song.title}
+        <span class="remove" data-remove="${song.id}" title="Remove">×</span>
+      </a>`;
+    }).join("");
+
+    pills.querySelectorAll("[data-remove]").forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.preventDefault(); e.stopPropagation();
+        const newList = getSetlist().filter(x => x !== btn.dataset.remove);
+        saveSetlist(newList);
+        renderSetlist();
+        renderList(document.getElementById("search").value);
+      });
+    });
+  }
+
+  // List
+  function renderList(query) {
+    const container = document.getElementById("song-list");
+    const noResults = document.getElementById("no-results");
+    const q = query.trim().toLowerCase();
+    const setlist = getSetlist();
+
+    const filtered = SONG_INDEX.filter(s =>
+      !q || s.title.toLowerCase().includes(q)
+    );
+
+    if (!filtered.length) {
+      container.innerHTML = "";
+      noResults.style.display = "";
+      return;
+    }
+    noResults.style.display = "none";
+
+    // Group by first letter
+    const groups = {};
+    filtered.forEach(s => {
+      // Strip leading "The " / "A " for sorting
+      const sortTitle = s.title.replace(/^(The |A |An )/i, "");
+      const letter = sortTitle[0].toUpperCase();
+      if (!groups[letter]) groups[letter] = [];
+      groups[letter].push(s);
+    });
+
+    const html = Object.keys(groups).sort().map(letter => {
+      const items = groups[letter].map(song => {
+        const starred = setlist.includes(song.id);
+        return `<div class="song-item">
+          <a href="song.html?id=${song.id}" class="song-item-title">${song.title}</a>
+          <span class="song-item-key">${KEY_NAMES[song.key]}</span>
+          <button class="song-item-star ${starred ? "starred" : ""}" data-id="${song.id}" title="Add to Sunday setlist">★</button>
+        </div>`;
+      }).join("");
+      return `<div class="alpha-section"><div class="alpha-letter">${letter}</div>${items}</div>`;
+    }).join("");
+
+    container.innerHTML = html;
+
+    // Star buttons
+    container.querySelectorAll(".song-item-star").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.id;
+        let list = getSetlist();
+        if (list.includes(id)) {
+          list = list.filter(x => x !== id);
+          btn.classList.remove("starred");
+        } else {
+          list.push(id);
+          btn.classList.add("starred");
+        }
+        saveSetlist(list);
+        renderSetlist();
+      });
+    });
+  }
+
+  // Init
+  renderSetlist();
+  renderList("");
+  document.getElementById("search").addEventListener("input", e => renderList(e.target.value));
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!-- Church Chords - transposer.html -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transpose - Church Chords</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="index.html">Church Chords</a>
+  <nav>
+    <a class="nav-btn" href="index.html">Songs</a>
+    <a class="nav-btn active" href="transposer.html">Transpose</a>
+  </nav>
+</header>
+
+<main class="transposer-page">
+  <h2>Free Transposer</h2>
+  <p>Paste any chord chart below - it'll be transposed as you type.</p>
+
+  <div class="panel" style="position:relative; top:auto; margin-bottom:16px; border-radius:10px;">
+    <label>
+      From
+      <select id="from-key">
+        <option value="0">A</option>
+        <option value="1">A# / Bb</option>
+        <option value="2">B</option>
+        <option value="3">C</option>
+        <option value="4">C# / Db</option>
+        <option value="5">D</option>
+        <option value="6">D# / Eb</option>
+        <option value="7">E</option>
+        <option value="8">F</option>
+        <option value="9">F# / Gb</option>
+        <option value="10">G</option>
+        <option value="11">G# / Ab</option>
+      </select>
+    </label>
+    <label>
+      To
+      <select id="to-key">
+        <option value="0">A</option>
+        <option value="1">A# / Bb</option>
+        <option value="2">B</option>
+        <option value="3">C</option>
+        <option value="4">C# / Db</option>
+        <option value="5">D</option>
+        <option value="6">D# / Eb</option>
+        <option value="7">E</option>
+        <option value="8">F</option>
+        <option value="9">F# / Gb</option>
+        <option value="10">G</option>
+        <option value="11">G# / Ab</option>
+      </select>
+    </label>
+    <button class="panel-btn" id="btn-flat">Flats ♭</button>
+    <button class="panel-btn" id="btn-sharp">Sharps ♯</button>
+  </div>
+
+  <textarea
+    class="chord-input-area"
+    id="chord-input"
+    placeholder="Paste chords here, e.g.
+G    D    Em   C
+Amazing love how can it be..."
+  ></textarea>
+
+  <div class="transposed-output" id="chord-output">Transposed output will appear here…</div>
+</main>
+
+<script src="songs.js"></script>
+<script src="script.js"></script>
+<script>
+  bindFreeTransposer();
+</script>
+</body>
+</html>

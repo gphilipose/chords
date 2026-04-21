@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!-- Church Chords - song.html (single template for ALL songs) -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Church Chords</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="index.html">Church Chords</a>
+  <nav>
+    <a class="nav-btn" href="index.html">Songs</a>
+    <a class="nav-btn" href="transposer.html">Transpose</a>
+  </nav>
+</header>
+
+<!-- Sticky transpose panel -->
+<div class="panel">
+  <label>
+    Key
+    <select id="key">
+      <option value="0">A</option>
+      <option value="1">A# / Bb</option>
+      <option value="2">B</option>
+      <option value="3">C</option>
+      <option value="4">C# / Db</option>
+      <option value="5">D</option>
+      <option value="6">D# / Eb</option>
+      <option value="7">E</option>
+      <option value="8">F</option>
+      <option value="9">F# / Gb</option>
+      <option value="10">G</option>
+      <option value="11">G# / Ab</option>
+    </select>
+  </label>
+  <button class="panel-btn" id="btn-flat">Flats ♭</button>
+  <button class="panel-btn" id="btn-sharp">Sharps ♯</button>
+  <span class="capo-label" id="capo-label"></span>
+</div>
+
+<main class="song-page">
+  <a class="back-link" href="index.html">
+    ← All songs
+  </a>
+  <div id="song-content">
+    <p style="color:var(--text-muted); font-size:14px;">Loading…</p>
+  </div>
+</main>
+
+<script src="songs.js"></script>
+<script src="script.js"></script>
+<script>
+  // Parse URL param
+  const params = new URLSearchParams(location.search);
+  const songId = params.get("id");
+  const song   = songId && SONGS[songId];
+
+  if (!song) {
+    document.getElementById("song-content").innerHTML =
+      `<p style="color:var(--text-muted)">Song not found. <a href="index.html" style="color:var(--accent)">Back to list</a></p>`;
+  } else {
+    document.title = song.title + " - Church Chords";
+
+    // Build chord/lyric structure
+    // Each chord token stores: semitone offset from song's baseKey, and any suffix (m, 7, maj7, etc.)
+    function parseChordToken(chordStr) {
+      // Separate root from suffix
+      const m = chordStr.match(/^([A-G][#b]?)(.*)/);
+      if (!m) return { root: chordStr, suffix: "", semitone: 0 };
+      const root   = m[1];
+      const suffix = m[2];
+      let idx = NOTES_SHARP.indexOf(root);
+      if (idx === -1) idx = NOTES_FLAT.indexOf(root);
+      // semitone offset relative to song's baseKey
+      const semitone = ((idx - song.baseKey) % 12 + 12) % 12;
+      return { root, suffix, semitone };
+    }
+
+    // Render
+    let html = `<h1 class="song-title">${song.title}</h1>`;
+    if (song.artist) html += `<p class="song-artist">${song.artist}</p>`;
+
+    song.sections.forEach(section => {
+      html += `<div class="section">`;
+      html += `<div class="section-label">${section.label}</div>`;
+
+      section.parts.forEach(part => {
+        html += `<div class="chord-row">`;
+
+        // Chord line
+        html += `<div class="chord-line">`;
+        part.chords.forEach(([chordStr]) => {
+          const { suffix, semitone } = parseChordToken(chordStr);
+          html += `<span class="chord-segment" data-semitone="${semitone}" data-suffix="${suffix}"></span>`;
+        });
+        html += `</div>`;
+
+        // Lyric line
+        html += `<div class="lyric-line">${part.lyric}</div>`;
+        html += `</div>`;
+      });
+
+      html += `</div>`;
+    });
+
+    document.getElementById("song-content").innerHTML = html;
+
+    // Init transposer
+    const savedKey = loadPageState(song.baseKey);
+    bindPanel(song.baseKey);
+    renderChords(savedKey);
+
+    // Set select to saved/base key
+    const keySelect = document.getElementById("key");
+    if (keySelect) keySelect.value = String(savedKey);
+  }
+</script>
+</body>
+</html>
